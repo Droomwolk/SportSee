@@ -1,0 +1,25 @@
+.list {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    &__card {
+        display: flex;
+        align-items: center;
+        background-color: #FBFBFB;
+        width: 16.125em;
+        height: 7.75em;
+        border-radius: 0.3125em;
+        &-img {
+            width: 3.75em;
+            margin: 2em;
+        }
+        &-text {
+            @include fontMensuration($primary-font, 700, 1.25em, null);
+            :nth-child(even) {
+                @include fontMensuration($primary-font, 500, 0.875em, $secondary-textColor);
+                margin-top: 1em;
+            }
+        }
+    }
+}

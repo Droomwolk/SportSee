@@ -1,0 +1,15 @@
+@import '../App/App.scss';
+
+@import './base/fonts';
+@import './utils/variables';
+@import './utils/mixins';
+
+@import '../components/header/header.scss';
+@import '../components/aside/aside.scss';
+@import '../components/barChart/barCharts.scss';
+@import '../components/lineChart/lineCharts.scss';
+@import '../components/list/list.scss';
+@import '../components/radarChart/radarCharts.scss';
+@import '../components/pieChart/pieCharts.scss';
+
+@import '../pages/homepage/homepage.scss';

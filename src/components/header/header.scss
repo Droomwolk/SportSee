@@ -1,0 +1,17 @@
+.header {
+    @include fontMensuration($primary-font, 500, 1.5em, null);
+    background-color: black;
+    display: flex;
+    align-items: center;
+    padding: 1em;
+    &-logo {
+        flex: 1;
+    }
+    &-navigation {
+        color: white;
+        display: flex;
+        flex: 2;
+        justify-content: space-around;
+        margin-left: 3em;
+    }
+}

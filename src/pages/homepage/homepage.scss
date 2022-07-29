@@ -1,0 +1,25 @@
+.homepage {
+    display: flex;
+    // width: 52.1875em;
+    &-title { 
+        @include fontMensuration($primary-font, 500, 3em, null);
+    }
+    &-phrase {
+        margin-top: 2em;
+        @include fontMensuration($primary-font, 400, 1.125em, null);
+    }
+    &__main {
+        margin-top: 4em;
+        display: flex;
+        justify-content: space-between;
+        &-graphic {
+            &-bottom {
+                display: flex;
+                margin-top: 2em;
+                :nth-child(even) {
+                    margin: 0 2em;
+                }
+            }
+        }
+    }
+}

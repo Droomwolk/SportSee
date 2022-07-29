@@ -1,0 +1,18 @@
+.barcharts {
+    background-color: #FBFBFB;
+    padding: 2em;
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        &-title {
+            @include fontMensuration($primary-font, 500, 0.9375em, null);  
+        }
+        &-list {
+            @include fontMensuration($primary-font, 500, 0.875em, $secondary-textColor);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 40%;
+        }
+    }
+}
