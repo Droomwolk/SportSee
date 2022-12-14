@@ -1,6 +1,8 @@
 import React from 'react'
-import { LineChart, Line, XAxis, YAxis, Tooltip} from "recharts";
+import { LineChart, Line, XAxis, YAxis, Tooltip, Rectangle,} from "recharts";
 import "../../styles/main.scss"
+import { useQuery } from "@tanstack/react-query";  
+import * as api from '../../services/axios'
 
 const data = [
     {
@@ -47,14 +49,47 @@ const data = [
     }
   ];
 
-const LineCharts = () => {
+const LineCharts = ({id}) => {
+
+  const { isLoading, error, data } = useQuery(["sessionsData"], async() => (await api.getAverageSessions(id)).data.sessions);
+
+  if (isLoading) return "Loading...";
+  
+  if (error) return "An error has occurred: " + error.message;
+
   return (
-    <div className='lineCharts'>
+    <div className='lineCharts'> 
       <LineChart width={280} height={260} data={data}>
-      <XAxis dataKey="name" />
+      <YAxis hide={true} domain={['dataMin -15', 'dataMax + 45']} />
+      <text
+      // className="title__lineChart"
+      width="15"
+      dominantBaseline={'hanging'}
+      x="15"
+      y="15"
+      fontSize="15"
+      fill="white"
+      opacity={0.55}
+      >
+        Durée moyenne des sessions
+      </text>
+      <XAxis 
+      dataKey="name"
+      stroke="rgba(255, 255, 255, 0.6)"
+      tick={{ fontSize: 12, fill: 'white' }}
+      tickLine={false}
+      axisLine={false}
+      opacity={0.6}
+      interval="preserveStartEnd" 
+      />
       {/* <YAxis /> */}
       <Tooltip itemStyle={{color: "black"}}/>
-      <Line type="monotone" dataKey="pv" stroke="#8884d8" strokeWidth={2} />
+      <Line type="monotone" dataKey="sessionLength" stroke="#8884d8" strokeWidth={2} strokeOpacity={1} dot={false}
+      activeDot={{
+        stroke: 'rgba(255, 255, 255, 0.5)',
+        strokeWidth: 10,
+        r: 5,
+      }}/>
       </LineChart>
     </div>
   )

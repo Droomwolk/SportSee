@@ -8,8 +8,10 @@ import {
     ResponsiveContainer
 } from "recharts"
 import "../../styles/main.scss"
+import { useQuery } from "@tanstack/react-query";
+import * as api from '../../services/axios'
 
-const data = [
+const datas = [
     {
       subject: "Math",
       A: 120,
@@ -48,7 +50,19 @@ const data = [
     }
 ];
 
-const RadarCharts = () => {
+const RadarCharts = ({id}) => {
+
+  const { isLoading, error, data } = useQuery(["performanceData"], async() => (await api.getPerformance(id)).data);
+
+  // console.log("PERFORMANCE", data);
+
+  if (isLoading) return "Loading...";
+  
+  const radar = data?.data.map((radars) => ({value: radars.value, kind: data.kind[radars.kind]}))
+  
+  if (error) return "An error has occurred: " + error.message;
+
+
   return (
     <div className='radarCharts'>
     <ResponsiveContainer width="100%" height="100%" > 
@@ -58,13 +72,13 @@ const RadarCharts = () => {
         outerRadius={80}
         // width={380}
         // height={560}
-        data={data}
+        data={radar}
         >
             <PolarGrid />
-            <PolarAngleAxis dataKey="subject" stroke='white' fill='white'/>
+            <PolarAngleAxis dataKey='kind' stroke='white' fill='white'/>
             <Radar
-                name="Mike"
-                dataKey="A"
+                name="userId"
+                dataKey="value"
                 stroke="red"
                 fill="red"
                 fillOpacity={0.6}

@@ -3,21 +3,28 @@ import { PieChart, Pie, Sector, Cell  } from 'recharts'
 
 import "../../styles/main.scss"
 
-const data = [
-    { name: 'Group A', value: 400 },
-    { name: 'Group B', value: 300 },
-    { name: 'Group C', value: 300 },
-    { name: 'Group D', value: 200 },
-  ];
+import { useQuery } from "@tanstack/react-query";  
+import * as api from '../../services/axios'
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
-const PieCharts = () => {
+const PieCharts = ({id}) => {
+
+  const { isLoading, error, data } = useQuery(["lineData"], async() => (await api.getInformation(id)).data);
+
+  console.log("LINE", data);
+
+  if (isLoading) return "Loading...";
+
+  const line = [{name: "A", value: data.score}]
+
+  if (error) return "An error has occurred: " + error.message;
+
   return (
     <div className='pieCharts'>
     <PieChart width={280} height={260}>
       <Pie
-        data={data}
+        data={line}
         cx={135}
         cy={130}
         innerRadius={70}
@@ -25,10 +32,11 @@ const PieCharts = () => {
         fill="#8884d8"
         paddingAngle={5}
         dataKey="value"
+        nameKey="A"
       >
-        {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-        ))}
+        
+        {/* <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} /> */}
+        
       </Pie>
     </PieChart>
     </div>
